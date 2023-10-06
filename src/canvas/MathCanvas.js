@@ -76,7 +76,6 @@ class MathCanvas {
     let r = this.canvas.getBoundingClientRect();
     let w = r.width;
     let h = r.height;
-    console.log(w, h);
     // maps x and y from plane range to canvas actual px range
     // coords are always mapped to multiples of 0.5, in order
     // to render cleaner vertical and horizontal lines
@@ -211,5 +210,10 @@ class MathCanvas {
       c.strokeStyle = st ? st.color || "black" : "black";
       c.strokeText(txt, x, y);
     }
+  }
+
+  clear() {
+    let r = this.canvas.getBoundingClientRect();
+    this.c.clearRect(0, 0, r.width, r.height);
   }
 }
