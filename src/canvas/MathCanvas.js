@@ -57,7 +57,7 @@ class MathCanvas {
    * plane defaults to canvas dimension ( [0,0,canvas.width,canvas.height] )
    * @param {Array<Number>} plane plane = [xmin,xmax,ymin,ymax]
    */
-  setPlane(plane = [0, 0, this.canvas.width, this.canvas.height]) {
+  setPlane(plane = [0, this.canvas.width, 0, this.canvas.height]) {
     this.#checkPlaneType(plane);
 
     this.#plane = plane;
@@ -115,17 +115,18 @@ class MathCanvas {
    * @param {Number} y y component of the start coordinates of the rectangle
    * @param {Number} w width of the rectangle (can be negative)
    * @param {Number} h height of the rectangle (can be negative)
-   * @param {*} [style] Optional, text styling and position.
+   * @param [style] Optional, text styling and position.
    */
   rect(x, y, w, h, style = { color: "black", fill: false, lineWidth: 1 }) {
     argsMustBeOfType([x, y, w, h], "number", ["x", "y", "w", "h"]);
     argMustBeOfType(style, "object", "style");
 
     let p = this.#plane;
+    const r = this.canvas.getBoundingClientRect();
     [x, y] = this.#mapCoords([x, y]);
-    w = parseInt(map(w, [0, p[1] - p[0]], [0, this.canvas.width]));
-    h = parseInt(map(h, [0, p[3] - [2]], [this.canvas.height, 0]));
-    console.log(x, y, x + w, y - h);
+
+    w = parseInt(map(w, [0, p[1] - p[0]], [0, r.width]));
+    h = parseInt(map(h, [0, p[3] - p[2]], [0, r.height]));
 
     const { c } = this;
     c.beginPath();
@@ -260,6 +261,9 @@ class MathCanvas {
     }
   }
 
+  /**
+   * clears the canvas
+   */
   clear() {
     let r = this.canvas.getBoundingClientRect();
     this.c.clearRect(0, 0, r.width, r.height);
