@@ -212,6 +212,44 @@ class MathCanvas {
     }
   }
 
+  arc(
+    x,
+    y,
+    radius_px,
+    startAngle,
+    endAngle,
+    counterclockwise,
+    style = {
+      color: "black",
+      lineWidth: 1,
+      fill: false,
+    }
+  ) {
+    argsMustBeOfType([x, y, radius_px, startAngle, endAngle], "number", [
+      "x",
+      "y",
+      "radius_px",
+      "startAngle",
+      "endAngle",
+    ]);
+    argMustBeOfType(counterclockwise, "boolean", "counterclockwise");
+    argMustBeOfType(style, "object", "style");
+
+    [x, y] = this.#mapCoords([x, y]);
+    const { c } = this;
+
+    c.arc(x, y, radius_px, startAngle, endAngle, counterclockwise);
+
+    if (style.fill) {
+      c.fillStyle = style.color || "black";
+      c.fill();
+    } else {
+      c.lineWidth = style.lineWidth || 1;
+      c.strokeStyle = style.color || "black";
+      c.stroke();
+    }
+  }
+
   clear() {
     let r = this.canvas.getBoundingClientRect();
     this.c.clearRect(0, 0, r.width, r.height);
