@@ -212,6 +212,16 @@ class MathCanvas {
     }
   }
 
+  /**
+   * Either fills or strokes an arc, on (x,y) coordinates in the defined plane.
+   * @param {Number} x The x component of the arc coordinates.
+   * @param {Number} y The y component of the arc coordinates.
+   * @param {Number} radius_px The radius of the arc in pixels.
+   * @param {Number} startAngle start angle of arc
+   * @param {Number} endAngle end angle of arc
+   * @param {Boolean} [counterclockwise] Optional, wether to arc counterclockwise or not, defaults to false
+   * @param [style] Optional, style of the arc, defaults to {color:"black", lineWidth:1, fill:false}
+   */
   arc(
     x,
     y,
