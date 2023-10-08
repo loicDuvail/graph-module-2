@@ -66,6 +66,9 @@ class MathCanvas {
 
   /**
    * Sets the performance mode for the MathCanvas instantiation
+   *
+   * If set to "performance", no type checking will be made,
+   * should be used after testing in "normal" mode.
    * @param {String} mode "normal" | "performance"
    */
   setMode(mode = "normal") {
@@ -79,7 +82,8 @@ class MathCanvas {
    * @returns {[Number,Number]} [x,y], the input values mapped to pixel position
    */
   #mapCoords([x, y]) {
-    argsMustBeOfType([x, y], "number", ["x", "y"]);
+    if (this.#mode != "performance")
+      argsMustBeOfType([x, y], "number", ["x", "y"]);
 
     let [xmin, xmax, ymin, ymax] = this.#plane;
     let r = this.canvas.getBoundingClientRect();
