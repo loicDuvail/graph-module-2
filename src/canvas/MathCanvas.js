@@ -9,6 +9,7 @@
  */
 class MathCanvas {
   #plane;
+  #mode = "normal";
   /**
    * @param {HTMLCanvasElement} canvas The canvas element the class methods will draw in
    * @param {Array<Number>} [plane] Optional, the plane from which to map drawing
@@ -58,9 +59,17 @@ class MathCanvas {
    * @param {Array<Number>} plane plane = [xmin,xmax,ymin,ymax]
    */
   setPlane(plane = [0, this.canvas.width, 0, this.canvas.height]) {
-    this.#checkPlaneType(plane);
+    if (this.#mode != "performance") this.#checkPlaneType(plane);
 
     this.#plane = plane;
+  }
+
+  /**
+   * Sets the performance mode for the MathCanvas instantiation
+   * @param {String} mode "normal" | "performance"
+   */
+  setMode(mode = "normal") {
+    this.#mode = mode;
   }
 
   /**
@@ -92,9 +101,11 @@ class MathCanvas {
    * @param [style]
    */
   line(from, to, style = { color: "black", lineWidth: 1 }) {
-    argMustBeArrayOfType(from, "number", 2, "from");
-    argMustBeArrayOfType(to, "number", 2, "to");
-    argMustBeOfType(style, "object", "style");
+    if (this.#mode != "performance") {
+      argMustBeArrayOfType(from, "number", 2, "from");
+      argMustBeArrayOfType(to, "number", 2, "to");
+      argMustBeOfType(style, "object", "style");
+    }
 
     const { c } = this;
     from = this.#mapCoords(from);
@@ -118,8 +129,10 @@ class MathCanvas {
    * @param [style] Optional, text styling and position.
    */
   rect(x, y, w, h, style = { color: "black", fill: false, lineWidth: 1 }) {
-    argsMustBeOfType([x, y, w, h], "number", ["x", "y", "w", "h"]);
-    argMustBeOfType(style, "object", "style");
+    if (this.#mode != "performance") {
+      argsMustBeOfType([x, y, w, h], "number", ["x", "y", "w", "h"]);
+      argMustBeOfType(style, "object", "style");
+    }
 
     let p = this.#plane;
     const r = this.canvas.getBoundingClientRect();
@@ -171,9 +184,11 @@ class MathCanvas {
       },
     }
   ) {
-    argsMustBeOfType([x, y], "number", ["x", "y"]);
-    argMustBeOfType(txt, "string", "txt");
-    argMustBeOfType(style, "object", "style");
+    if (this.#mode != "performance") {
+      argsMustBeOfType([x, y], "number", ["x", "y"]);
+      argMustBeOfType(txt, "string", "txt");
+      argMustBeOfType(style, "object", "style");
+    }
 
     const [cw, ch] = [this.canvas.width, this.canvas.height];
     const { c } = this;
@@ -236,15 +251,17 @@ class MathCanvas {
       fill: false,
     }
   ) {
-    argsMustBeOfType([x, y, radius_px, startAngle, endAngle], "number", [
-      "x",
-      "y",
-      "radius_px",
-      "startAngle",
-      "endAngle",
-    ]);
-    argMustBeOfType(counterclockwise, "boolean", "counterclockwise");
-    argMustBeOfType(style, "object", "style");
+    if (this.#mode != "performance") {
+      argsMustBeOfType([x, y, radius_px, startAngle, endAngle], "number", [
+        "x",
+        "y",
+        "radius_px",
+        "startAngle",
+        "endAngle",
+      ]);
+      argMustBeOfType(counterclockwise, "boolean", "counterclockwise");
+      argMustBeOfType(style, "object", "style");
+    }
 
     [x, y] = this.#mapCoords([x, y]);
     const { c } = this;
