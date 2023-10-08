@@ -268,4 +268,16 @@ class MathCanvas {
     let r = this.canvas.getBoundingClientRect();
     this.c.clearRect(0, 0, r.width, r.height);
   }
+
+  /**
+   * Sets a background color for the canvas
+   * @param {String} color
+   */
+  setBackground(color) {
+    const p = this.#plane;
+    this.rect(p[0], p[2], p[1] - p[0], p[3] - p[2], {
+      fill: true,
+      color,
+    });
+  }
 }
