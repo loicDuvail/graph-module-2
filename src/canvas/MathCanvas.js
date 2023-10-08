@@ -55,13 +55,20 @@ class MathCanvas {
   /**
    * Sets a new input plane for the MathCanvas instantiation.
    *
-   * plane defaults to canvas dimension ( [0,0,canvas.width,canvas.height] )
+   * plane defaults to canvas dimension ( [0,0,<canvas client width>,<canvasc client height>] )
    * @param {Array<Number>} plane plane = [xmin,xmax,ymin,ymax]
    */
-  setPlane(plane = [0, this.canvas.width, 0, this.canvas.height]) {
+  setPlane(plane) {
+    if (!plane) {
+      const r = this.canvas.getBoundingClientRect();
+      plane = [0, r.width, 0, r.height];
+    }
+
     if (this.#mode != "performance") this.#checkPlaneType(plane);
 
     this.#plane = plane;
+
+    return plane;
   }
 
   /**
