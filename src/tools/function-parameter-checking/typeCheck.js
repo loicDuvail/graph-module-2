@@ -20,7 +20,7 @@ function argsMustBeOfType(args, type, argNames) {
   let errMsg = "";
   invalidArgs.forEach(([arg, argName]) => {
     let strArg = typeof arg == "string" ? `"${arg}"` : arg;
-    errMsg += `"${argName}" parameter must be of type ${type}\n"${argName}" value: ${strArg}, type: ${typeof arg}`;
+    errMsg += `"${argName}" parameter must be of type ${type}\n"${argName}" value: ${strArg}, type: ${typeof arg}\n`;
   });
   throw new Error(errMsg);
 }
