@@ -55,7 +55,7 @@ class MathCanvas {
   /**
    * Sets a new input plane for the MathCanvas instantiation.
    *
-   * plane defaults to canvas dimension ( [0,0,<canvas client width>,<canvasc client height>] )
+   * plane defaults to canvas dimension ( [0,<canvas client width>,0,<canvas client height>] )
    * @param {Array<Number>} plane plane = [xmin,xmax,ymin,ymax]
    */
   setPlane(plane) {
