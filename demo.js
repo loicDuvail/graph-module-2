@@ -13,7 +13,13 @@ const grid = new Grid(canvas, plane, {
     },
   },
 });
-console.log(grid.settings);
+grid.changeSettings({
+  gridLines: {
+    vertical: { displayed: true },
+    horizontal: { displayed: true },
+  },
+});
+grid.setMode("performance");
 
 let test = () => {
   grid.drawGrid();
@@ -23,7 +29,7 @@ poppins
   .load()
   .then(() => {
     document.fonts.add(poppins);
-    // checkAverageDuration(test, 10000);
+    checkAverageDuration(test, 10000);
     test();
   })
   .catch((err) => console.error(err));

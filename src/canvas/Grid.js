@@ -38,11 +38,12 @@ let defaultGridSettings = {
 };
 
 class Grid {
+  #settings;
   #mode = "normal";
   #m;
   #plane;
-  #xStep = 2.5;
-  #yStep = 5;
+  #xStep = 1;
+  #yStep = 1;
   // number of subgrid lines
   #xSubsections = 4;
   #ySubsections = 4;
@@ -53,8 +54,8 @@ class Grid {
 
     // set settings to default then modify only the properties defined
     // in "settings" parameter
-    this.settings = defaultGridSettings;
-    deepMerge(this.settings, settings);
+    this.#settings = defaultGridSettings;
+    deepMerge(this.#settings, settings);
   }
 
   /**
@@ -63,7 +64,15 @@ class Grid {
    * @param {Object} newSettings
    */
   changeSettings(newSettings) {
-    deepMerge(this.settings, newSettings);
+    deepMerge(this.#settings, newSettings);
+  }
+
+  /**
+   * Returns current settings of the grid.
+   * @returns current settings of the grid
+   */
+  getSettings() {
+    return { ...this.#settings };
   }
 
   /**
@@ -126,7 +135,7 @@ class Grid {
    * following the current grid setting
    */
   #drawAxis() {
-    const { x: xAxis, y: yAxis } = this.settings.axis;
+    const { x: xAxis, y: yAxis } = this.#settings.axis;
     const p = this.#plane;
     const m = this.#m;
 
@@ -149,7 +158,7 @@ class Grid {
    * following the current grid setting
    */
   drawGrid() {
-    const { gridLines: gs, subGridLines: ss, axis: as } = this.settings;
+    const { gridLines: gl, subGridLines: sl, axis: as } = this.#settings;
     const m = this.#m;
     const p = this.#plane;
     const xStep = this.#xStep;
@@ -160,37 +169,37 @@ class Grid {
     m.clear();
 
     for (let y = p[2] - (p[2] % yStep) - yStep; y <= p[3]; y += yStep) {
-      if (ss.horizontal.displayed)
-        for (let i = gs.horizontal.displayed ? 0 : 1; i < ys; i++) {
+      if (sl.horizontal.displayed)
+        for (let i = gl.horizontal.displayed ? 1 : 0; i < ys; i++) {
           let subLineY = y + (i * yStep) / ys;
           m.line([p[2], subLineY], [p[3], subLineY], {
-            color: ss.horizontal.color,
-            lineWidth: ss.horizontal.lineWidth,
+            color: sl.horizontal.color,
+            lineWidth: sl.horizontal.lineWidth,
           });
         }
 
-      if (gs.horizontal.displayed) {
+      if (gl.horizontal.displayed) {
         m.line([p[2], y], [p[3], y], {
-          color: gs.horizontal.color,
-          lineWidth: gs.horizontal.lineWidth,
+          color: gl.horizontal.color,
+          lineWidth: gl.horizontal.lineWidth,
         });
       }
     }
 
     for (let x = p[0] - (p[0] % xStep) - xStep; x <= p[1]; x += xStep) {
-      if (ss.vertical.displayed)
-        for (let i = gs.vertical.displayed ? 0 : 1; i < xs; i++) {
+      if (sl.vertical.displayed)
+        for (let i = gl.vertical.displayed ? 1 : 0; i < xs; i++) {
           let subLineX = x + (i * xStep) / xs;
           m.line([subLineX, p[2]], [subLineX, p[3]], {
-            color: ss.vertical.color,
-            lineWidth: ss.vertical.lineWidth,
+            color: sl.vertical.color,
+            lineWidth: sl.vertical.lineWidth,
           });
         }
 
-      if (gs.vertical.displayed) {
+      if (gl.vertical.displayed) {
         m.line([x, p[2]], [x, p[3]], {
-          color: gs.vertical.color,
-          lineWidth: gs.vertical.lineWidth,
+          color: gl.vertical.color,
+          lineWidth: gl.vertical.lineWidth,
         });
       }
     }
