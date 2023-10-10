@@ -83,7 +83,7 @@ class MathCanvas {
    * @param padding
    */
   setPadding(padding = defaultPadding) {
-    padding = deepMerge(defaultPadding, padding);
+    padding = deepMerge({ ...defaultPadding }, padding);
 
     const { c } = this;
     let r = c.canvas.getBoundingClientRect();
