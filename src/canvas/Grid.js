@@ -35,6 +35,7 @@ let defaultGridSettings = {
       lineWidth: 1,
     },
   },
+  step_px: 100,
 };
 
 class Grid {
@@ -49,6 +50,7 @@ class Grid {
   #ySubsections = 4;
 
   constructor(canvas, plane, settings = defaultGridSettings) {
+    this.canvas = canvas;
     this.#m = new MathCanvas(canvas);
     this.setPlane(plane);
 
@@ -100,6 +102,7 @@ class Grid {
     // a default plane, otherwise the unmodified plane
     plane = this.#m.setPlane(plane);
     this.#plane = plane;
+    return plane;
   }
 
   /**
@@ -180,14 +183,14 @@ class Grid {
       if (sl.horizontal.displayed)
         for (let i = gl.horizontal.displayed ? 1 : 0; i < ys; i++) {
           let subLineY = y + (i * yStep) / ys;
-          m.line([p[2], subLineY], [p[3], subLineY], {
+          m.line([p[0], subLineY], [p[1], subLineY], {
             color: sl.horizontal.color,
             lineWidth: sl.horizontal.lineWidth,
           });
         }
 
       if (gl.horizontal.displayed) {
-        m.line([p[2], y], [p[3], y], {
+        m.line([p[0], y], [p[1], y], {
           color: gl.horizontal.color,
           lineWidth: gl.horizontal.lineWidth,
         });
