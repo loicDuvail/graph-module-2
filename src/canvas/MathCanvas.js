@@ -17,6 +17,7 @@ let defaultPadding = {
 class MathCanvas {
   #plane;
   #mode = "normal";
+  #padding;
   /**
    * @param {HTMLCanvasElement} canvas The canvas element the class methods will draw in
    * @param {Array<Number>} [plane] Optional, the plane from which to map drawing
@@ -85,15 +86,7 @@ class MathCanvas {
   setPadding(padding = defaultPadding) {
     padding = deepMerge({ ...defaultPadding }, padding);
 
-    const { c } = this;
-    let r = c.canvas.getBoundingClientRect();
-    let dpr = window.devicePixelRatio;
-
-    const w = (r.width - (padding.left + padding.right)) * dpr;
-    const h = (r.height - (padding.top + padding.bottom)) * dpr;
-
-    c.translate(padding.left, padding.top);
-    c.scale(w / c.canvas.width, h / c.canvas.height);
+    this.#padding = padding;
   }
 
   /**
@@ -118,20 +111,26 @@ class MathCanvas {
       argsMustBeOfType([x, y], "number", ["x", "y"]);
 
     let [xmin, xmax, ymin, ymax] = this.#plane;
+    const pad = this.#padding;
+    const padTotX = pad.left + pad.right;
+    const padTotY = pad.top + pad.bottom;
+
+    if (x < xmin) x = xmin;
+    if (x > xmax) x = xmax;
+    if (y < ymin) y = ymin;
+    if (y > ymax) y = ymax;
+
     let r = this.canvas.getBoundingClientRect();
     let w = r.width;
     let h = r.height;
     // maps x and y from plane range to canvas actual px range
     // coords are always mapped to multiples of 0.5, in order
     // to render cleaner vertical and horizontal lines
-    let mappedX = Math.floor(map(x, [xmin, xmax], [0, w])) + 0.5;
+    let mappedX =
+      Math.floor(map(x, [xmin, xmax], [0, w - padTotX])) + 0.5 + pad.left;
     // h and 0 swapped to invert y axis
-    let mappedY = Math.floor(map(y, [ymin, ymax], [h, 0])) + 0.5;
-
-    if (mappedX < 0) mappedX = 0;
-    if (mappedX > w) mappedX = w;
-    if (mappedY < 0) mappedY = 0;
-    if (mappedY > h) mappedY = h;
+    let mappedY =
+      Math.floor(map(y, [ymin, ymax], [h - padTotY, 0])) + 0.5 + pad.top;
 
     return [mappedX, mappedY];
   }
