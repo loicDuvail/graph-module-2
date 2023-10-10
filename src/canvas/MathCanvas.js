@@ -115,6 +115,7 @@ class MathCanvas {
     const padTotX = pad.left + pad.right;
     const padTotY = pad.top + pad.bottom;
 
+    // input coords bounded to avoid overflow when non-null padding
     if (x < xmin) x = xmin;
     if (x > xmax) x = xmax;
     if (y < ymin) y = ymin;
