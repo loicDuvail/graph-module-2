@@ -102,6 +102,14 @@ class Grid {
     this.#plane = plane;
   }
 
+  /**
+   * Sets a padding for the grid.
+   * @param padding
+   */
+  setPadding(padding = defaultPadding) {
+    this.#m.setPadding(padding);
+  }
+
   setXStep(xStep) {
     if (this.#mode != "performance") argMustBeOfType(xStep, "number", "xStep");
     this.#xStep = xStep;

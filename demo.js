@@ -29,7 +29,7 @@ poppins
   .load()
   .then(() => {
     document.fonts.add(poppins);
-    checkAverageDuration(test, 10000);
+    // checkAverageDuration(test, 10000);
     test();
   })
   .catch((err) => console.error(err));

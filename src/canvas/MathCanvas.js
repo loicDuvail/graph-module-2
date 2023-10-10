@@ -1,3 +1,10 @@
+let defaultPadding = {
+  left: 0,
+  top: 0,
+  right: 0,
+  bottom: 0,
+};
+
 /**
  * Creates an object with methods to draw in canvas passed as argument.
  *
@@ -72,6 +79,24 @@ class MathCanvas {
   }
 
   /**
+   * Sets a padding for the canvas.
+   * @param padding
+   */
+  setPadding(padding = defaultPadding) {
+    padding = deepMerge(defaultPadding, padding);
+
+    const { c } = this;
+    let r = c.canvas.getBoundingClientRect();
+    let dpr = window.devicePixelRatio;
+
+    const w = (r.width - (padding.left + padding.right)) * dpr;
+    const h = (r.height - (padding.top + padding.bottom)) * dpr;
+
+    c.translate(padding.left, padding.top);
+    c.scale(w / c.canvas.width, h / c.canvas.height);
+  }
+
+  /**
    * Sets the performance mode for the MathCanvas instantiation
    *
    * If set to "performance", no type checking will be made,
@@ -102,6 +127,12 @@ class MathCanvas {
     let mappedX = Math.floor(map(x, [xmin, xmax], [0, w])) + 0.5;
     // h and 0 swapped to invert y axis
     let mappedY = Math.floor(map(y, [ymin, ymax], [h, 0])) + 0.5;
+
+    if (mappedX < 0) mappedX = 0;
+    if (mappedX > w) mappedX = w;
+    if (mappedY < 0) mappedY = 0;
+    if (mappedY > h) mappedY = h;
+
     return [mappedX, mappedY];
   }
 
