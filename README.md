@@ -6,11 +6,11 @@ The goal of this library is to be able to easely render 2 and 3 dimensional visu
 
 ## folder architecture
 
-- [bundle](src/bundle/)
+- bundle [->](src/bundle/)
 
   - [bundle.js](src/bundle/bundle.js) is a minified version of every js files in dependency order
 
-- [canvas](src/canvas)
+- canvas[->](src/canvas)
 
   - [MathCanvas.js](src/canvas/MathCanvas.js) offers a class which is an extension of a 2d canvas rendering context, in order to easely drawing shapes in a mathematical standard approach.  
     It possesses a setPlane method, which sets a virtual plane in which to draw.  
