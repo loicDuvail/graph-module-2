@@ -217,4 +217,11 @@ class Grid {
 
     this.#drawAxis();
   }
+
+  /**
+   * clears the whole grid.
+   */
+  clear() {
+    this.#m.clear();
+  }
 }
