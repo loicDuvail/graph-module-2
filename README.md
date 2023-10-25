@@ -22,27 +22,18 @@ const data = [
   { x: 3, y: 7 },
   { x: 4, y: 8 },
   { x: 5, y: -2 },
-  { x: 6, y: 12 },
-  { x: 7, y: 10 },
-  { x: 8, y: 3 },
-  { x: 9, y: 4 },
-  { x: 10, y: 0 },
-  { x: 11, y: -2 },
-  { x: 12, y: -1 },
-  { x: 13, y: 0 },
-  { x: 14, y: -1 },
-  { x: 15, y: 0 },
-  { x: 16, y: 11 },
-  { x: 17, y: 6 },
+  { x: 6, y: 5 },
 ];
 
-const plot = new Plotter();
+const plotter = new Plotter();
 
-plot.addDataContext({
+plotter.addDataContext({
   main: true, // indicates if the grid should be based on this dataContext
   data,
   plotStyle: "graph",
 });
+
+plotter.plot();
 ```
 
 ## folder architecture
