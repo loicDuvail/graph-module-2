@@ -5,6 +5,25 @@ let defaultPadding = {
   bottom: 0,
 };
 
+let defaultTxtStyle = {
+  fill: true,
+  text: {
+    color: "black",
+    lineWidth: 1,
+    font: "15px Poppins",
+    baseline: "middle",
+    align: "center",
+    outline: false,
+    outlineColor: "red",
+  },
+  position: {
+    marginLeft_px: 0,
+    marginTop_px: 0,
+    stayInBound: true,
+    inBoundMargin_px: 20,
+  },
+};
+
 /**
  * Creates an object with methods to draw in canvas passed as argument.
  *
@@ -111,7 +130,7 @@ class MathCanvas {
       argsMustBeOfType([x, y], "number", ["x", "y"]);
 
     let [xmin, xmax, ymin, ymax] = this.#plane;
-    const pad = this.#padding;
+    const pad = this.#padding || { top: 0, left: 0, bottom: 0, right: 0 };
     const padTotX = pad.left + pad.right;
     const padTotY = pad.top + pad.bottom;
 
@@ -203,34 +222,14 @@ class MathCanvas {
    * @param {Number} y The y component of the text coordinates.
    * @param {*} [style] Optional, text styling and position.
    */
-  text(
-    txt,
-    x,
-    y,
-    style = {
-      fill: true,
-      text: {
-        color: "black",
-        lineWidth: 1,
-        font: "15px Arial",
-        baseline: "middle",
-        align: "center",
-        outline: false,
-        outlineColor: "red",
-      },
-      position: {
-        marginLeft_px: 0,
-        marginTop_px: 0,
-        stayInBound: true,
-        inBoundMargin_px: 20,
-      },
-    }
-  ) {
+  text(txt, x, y, style = defaultTxtStyle) {
     if (this.#mode != "performance") {
       argsMustBeOfType([x, y], "number", ["x", "y"]);
       argMustBeOfType(txt, "string", "txt");
       argMustBeOfType(style, "object", "style");
     }
+
+    style = deepMerge({ ...defaultTxtStyle }, style);
 
     const [cw, ch] = [this.canvas.width, this.canvas.height];
     const { c } = this;
@@ -249,14 +248,14 @@ class MathCanvas {
         let ibm = sp.inBoundMargin_px;
         if (x < ibm) x = ibm;
         if (x > cw - ibm) x = cw - ibm;
-        if (y < ibm) y = ybm;
+        if (y < ibm) y = ibm;
         if (y > ch - ibm) y = ch - ibm;
       }
     }
 
     let st = style.text;
 
-    c.textAlign = st ? st.textAlign || "center" : "center";
+    c.textAlign = st ? st.align || "center" : "center";
     c.textBaseline = st ? st.baseline || "middle" : "middle";
     c.font = st ? st.font || "15px Arial" : "15px Arial";
 
