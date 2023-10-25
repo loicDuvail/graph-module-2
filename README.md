@@ -2,7 +2,7 @@
 
 ## Goal
 
-The goal of this library is to be able to easely render 2 and 3 dimensional visual representations of data on a cartesian-coordinate-system.
+The goal of this library is to be able to easely render 2 and 3 dimensional visual representations of data on a 2d cartesian-coordinate-system.
 
 ## folder architecture
 
@@ -10,7 +10,7 @@ The goal of this library is to be able to easely render 2 and 3 dimensional visu
 
   - bundle.js is a minified version of every js files in dependency order
 
-- canvas
+- [canvas](src/canvas)
 
   - MathCanvas.js offers a class which is an extension of a 2d canvas rendering context, in order to easely drawing shapes in a mathematical standard approach.  
     It possesses a setPlane method, which sets a virtual plane in which to draw.  
