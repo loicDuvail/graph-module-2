@@ -11,18 +11,10 @@ ex:
 const canvas = document.getElementById("canvas");
 
 const data = [
-  { x: -5, y: 1 },
-  { x: -4, y: 7 },
-  { x: -3, y: 2 },
-  { x: -2, y: 8 },
-  { x: -1, y: 8 },
-  { x: 0, y: 6 },
-  { x: 1, y: 9 },
-  { x: 2, y: -1 },
-  { x: 3, y: 7 },
-  { x: 4, y: 8 },
-  { x: 5, y: -2 },
-  { x: 6, y: 5 },
+    { x: -5, y: 1 },{ x: -4, y: 7 },{ x: -3, y: 2 },
+    { x: -2, y: 8 },{ x: -1, y: 8 },{ x: 0, y: 6 },
+    { x: 1, y: 9 },{ x: 2, y: -1 },{ x: 3, y: 7 },
+    { x: 4, y: 8 },{ x: 5, y: -2 },{x:6, y:5}
 ];
 
 const plotter = new Plotter();
