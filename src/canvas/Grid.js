@@ -36,10 +36,12 @@ let defaultGridSettings = {
     },
   },
   step_px: 100,
+  background_color: "white",
 };
 
 class Grid {
   #settings;
+  #padding;
   #mode = "normal";
   #m;
   #plane;
@@ -110,6 +112,7 @@ class Grid {
    * @param padding
    */
   setPadding(padding = defaultPadding) {
+    this.#padding = padding;
     this.#m.setPadding(padding);
   }
 
@@ -178,6 +181,10 @@ class Grid {
     const ys = this.#ySubsections;
 
     m.clear();
+    let pad = { ...this.#padding };
+    this.setPadding({ top: 0, left: 0, bottom: 0, right: 0 });
+    m.setBackground(this.#settings.background_color || "transparent");
+    this.setPadding(pad);
 
     for (let y = p[2] - (p[2] % yStep) - yStep; y <= p[3]; y += yStep) {
       if (sl.horizontal.displayed)
